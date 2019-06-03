@@ -1,0 +1,12 @@
+performance metrics commands
+influx -execute 'select derivative(pointReq, 1s) from "write" where time > now() - 5m' -database '_internal' -precision 'rfc3339' -username <username> -password <passwod>
+
+SHOW STATS
+SHOW DIAGNOSTICS
+
+To find the number of writes separated by database since the beginnning of the log file:
+grep 'POST' /var/log/influxdb/influxd.log | awk '{ print $10 }' | sort | uniq -c
+
+Or, for systemd systems logging to journald:
+journalctl -u influxdb.service | awk '/POST/ { print $10 }' | sort | uniq -c
+
