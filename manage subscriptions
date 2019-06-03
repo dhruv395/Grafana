@@ -1,0 +1,22 @@
+InfluxDB subscriptions are local or remote endpoints to which all data written to InfluxDB is copied. Subscriptions are 
+primarily used with Kapacitor, but any endpoint able to accept UDP, HTTP, or HTTPS connections can subscribe to InfluxDB and receive
+a copy of all data as it is written.
+
+How subscriptions work
+
+-- Pattern:
+CREATE SUBSCRIPTION "<subscription_name>" ON "<db_name>"."<retention_policy>" DESTINATIONS <ALL|ANY> "<subscription_endpoint_host>"
+-- Examples:
+-- Create a SUBSCRIPTION on database 'mydb' and retention policy 'autogen' that sends data to 'example.com:9090' via HTTP.
+CREATE SUBSCRIPTION "sub0" ON "mydb"."autogen" DESTINATIONS ALL 'http://example.com:9090'
+
+-- Create a SUBSCRIPTION on database 'mydb' and retention policy 'autogen' that round-robins the data to 'h1.example.com:9090' and 'h2.example.com:9090' via UDP.
+CREATE SUBSCRIPTION "sub0" ON "mydb"."autogen" DESTINATIONS ANY 'udp://h1.example.com:9090', 'udp://h2.example.com:9090'
+
+show subscriptions
+
+Remove subscriptions
+-- Pattern:
+DROP SUBSCRIPTION "<subscription_name>" ON "<db_name>"."<retention_policy>"
+-- Example:
+DROP SUBSCRIPTION "sub0" ON "mydb"."autogen"
