@@ -35,7 +35,8 @@ REVOKE ALL privileges from todd on the NOAA_water_database database:
 influx -username '<username>' -password '<password>'   
 show databases
 use telegraf
-show measurements
+show measurements              : show tables
+select count(*) from cpu
 
 SHOW STATS                                                          : To see node statistics
 SHOW DIAGNOSTICS                                                    : To see node diagnostic information
