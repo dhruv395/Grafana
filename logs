@@ -1,0 +1,3 @@
+On most Linux systems, the logs will be directed to the systemd journal and can be accessed with the command:
+
+sudo journalctl -u influxdb.service | tail
