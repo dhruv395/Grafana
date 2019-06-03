@@ -1,0 +1,41 @@
+When you enable HTTP authentication, InfluxDB requires you to create at least one admin user before you can interact with the system.
+CREATE USER <username> WITH PASSWORD '<password>' WITH ALL PRIVILEGES
+
+GRANT administrative privileges to an existing user
+GRANT ALL PRIVILEGES TO <username>
+
+REVOKE administrative privileges from an admin user
+REVOKE ALL PRIVILEGES FROM <username>
+
+SHOW all existing users and their admin status
+SHOW USERS
+
+CREATE a new non-admin user
+CREATE USER <username> WITH PASSWORD '<password>'
+
+GRANT READ, WRITE or ALL database privileges to an existing user
+GRANT [READ,WRITE,ALL] ON <database_name> TO <username>
+
+GRANT ALL access to todd on the NOAA_water_database database:
+GRANT ALL ON "NOAA_water_database" TO "todd"
+
+REVOKE ALL privileges from todd on the NOAA_water_database database:
+ REVOKE WRITE ON "NOAA_water_database" FROM "todd"
+ 
+ SHOW a user’s database privileges
+ SHOW GRANTS FOR <user_name>
+ 
+ ReSET a user’s password
+ SET PASSWORD FOR <username> = '<password>'
+ 
+ DROP a user
+ DROP USER <username>
+ 
+  login to influxdb
+influx -username '<username>' -password '<password>'   
+show databases
+use telegraf
+show measurements
+
+SHOW STATS                                                          : To see node statistics
+SHOW DIAGNOSTICS                                                    : To see node diagnostic information
