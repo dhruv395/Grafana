@@ -37,6 +37,7 @@ show databases
 use telegraf
 show measurements              : show tables
 select count(*) from cpu
+precision rfc3339              : human readable time format
 
 SHOW STATS                                                          : To see node statistics
 SHOW DIAGNOSTICS                                                    : To see node diagnostic information
