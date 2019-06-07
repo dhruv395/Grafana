@@ -38,6 +38,7 @@ use telegraf
 show measurements              : show tables
 select count(*) from cpu
 precision rfc3339              : human readable time format
+select * from cpu order by time desc limit 10
 
 SHOW STATS                                                          : To see node statistics
 SHOW DIAGNOSTICS                                                    : To see node diagnostic information
