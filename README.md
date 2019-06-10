@@ -110,7 +110,7 @@ InfluxDB - https://docs.influxdata.com/influxdb/v1.3/introduction/getting_starte
 Influxdb Commands:
 CREATE USER "sammy" WITH PASSWORD 'sammy_admin' WITH ALL PRIVILEGES
 ->login to influxdb
-influx -username 'adtadmin' -password 'adt_admin   
+influx -username 'admin' -password '@dmin   
 show databases
 use telegraf
 show measurements
