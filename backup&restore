@@ -1,2 +1,13 @@
+
+sudo service influxdb start (Or leave this step if service is already running)
+influxd backup -database grpcdb /opt/data
+Import Data:
+
+sudo service influxdb stop
+influxd restore -metadir /var/lib/influxdb/meta /opt/data
+influxd restore -database grpcdb -datadir /var/lib/influxdb/data /opt/data
+sudo service influxdb start
+
+don't try
 influxd backup -database telegraf ./backup_influxdb
 influxd restore -database telegraf -metadir /var/lib/influxdb/meta -datadir /var/lib/influxdb/data ./backup_influxdb/
