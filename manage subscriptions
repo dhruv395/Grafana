@@ -13,6 +13,10 @@ CREATE SUBSCRIPTION "sub0" ON "mydb"."autogen" DESTINATIONS ALL 'http://example.
 -- Create a SUBSCRIPTION on database 'mydb' and retention policy 'autogen' that round-robins the data to 'h1.example.com:9090' and 'h2.example.com:9090' via UDP.
 CREATE SUBSCRIPTION "sub0" ON "mydb"."autogen" DESTINATIONS ANY 'udp://h1.example.com:9090', 'udp://h2.example.com:9090'
 
+
+In case authentication is enabled on the subscriber host, adapt the URL to contain the credentials.
+CREATE SUBSCRIPTION "sub1HA" ON "telegraf"."autogen" DESTINATIONS ALL 'http://username:password@subscriptionserver-ip:8086'
+
 show subscriptions
 
 Remove subscriptions
