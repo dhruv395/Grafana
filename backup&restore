@@ -1,1 +1,2 @@
 influxd backup -database telegraf ./backup_influxdb
+influxd restore -database telegraf -metadir /var/lib/influxdb/meta -datadir /var/lib/influxdb/data ./backup_influxdb/
