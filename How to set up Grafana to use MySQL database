@@ -1,0 +1,70 @@
+Grafana uses the sqlite database by default. We will set up MySQL, 
+
+Article
+Assume you have a MySQL database server running on mysqlserver.example.com.
+
+Summary of the steps
+
+MySQL set up
+Set up a grafana database on mysqlserver.example.com
+Create a MySQL user called grafana, assign and flush privileges
+Edit the grafana.ini configuration file to enable use of MySQL (Edit the Advanced ams-grafana-ini section in the Ambari Metrics Config tab in Ambari)
+Start the Grafana
+Starting Grafana creates the grafana tables. The session table however does not get created and the grafana docs say to create it for MySQL and postgres - so create the session table as per the grafana docs http://docs.grafana.org/installation/configuration/
+Start Grafana - and all should be well
+Detailed steps
+
+On MySQL server (be sure to change the password):
+
+mysql> create database grafana;
+Query OK, 1 row affected (0.01 sec)
+mysql> GRANT USAGE ON `grafana`.* to 'grafana'@'mysqlserver.example.com' identified by 'grafanamysqlpasswd';
+Query OK, 0 rows affected (0.00 sec)
+mysql> GRANT ALL PRIVILEGES ON `grafana`.* to 'grafana'@'mysqlserver.example.com' with grant option;Query OK, 0 rows affected (0.00 sec)
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+mysql> use grafana;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+mysql> create table `session` (
+    -> `key`   char(16) not null,
+    -> `data`  blob,
+    -> `expiry` int(11) unsigned not null,
+    -> primary key (`key`)
+    -> ) ENGINE=MyISAM default charset=utf8;
+Query OK, 0 rows affected (0.01 sec)
+Edit the grafana.ini configuration file (in Ambari, edit the Advanced ams-grafana-ini section in the Ambari Metrics Config tab) - see snippet from the config file below
+
+<snipped>
+#################################### Database ####################################
+[database]
+# Either "mysql", "postgres" or "sqlite3", it's your choice
+;type = sqlite3
+;host = 127.0.0.1:3306
+;name = grafana
+;user = root
+;password =
+type = mysql
+host = mysqlserver.example.com:3306
+name = grafana
+user = grafana
+password = grafanamysqluserpasswd
+# For "postgres" only, either "disable", "require" or "verify-full"
+;ssl_mode = disable
+# For "sqlite3" only, path relative to data_path setting
+;path = grafana.db
+#################################### Session ####################################
+[session]
+# Either "memory", "file", "redis", "mysql", "postgres", default is "file"
+;provider = file
+provider = mysql
+# Provider config options
+# memory: not have any config yet
+# file: session dir path, is relative to grafana data_path
+# redis: config like redis server e.g. `addr=127.0.0.1:6379,pool_size=100,db=grafana`
+# mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1:3306)/database_name`
+# postgres: user=a password=b host=localhost port=5432 dbname=c sslmode=disable
+;provider_config = sessions
+provider_config = `grafana:grafanamysqluserpasswd@tcp(mysqlserver.example.com:3306)/grafana` 
+provider = mysql
+<snipped>
