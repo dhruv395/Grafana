@@ -17,23 +17,19 @@ Detailed steps
 On MySQL server (be sure to change the password):
 
 mysql> create database grafana;
-Query OK, 1 row affected (0.01 sec)
-mysql> GRANT USAGE ON `grafana`.* to 'grafana'@'mysqlserver.example.com' identified by 'grafanamysqlpasswd';
-Query OK, 0 rows affected (0.00 sec)
-mysql> GRANT ALL PRIVILEGES ON `grafana`.* to 'grafana'@'mysqlserver.example.com' with grant option;Query OK, 0 rows affected (0.00 sec)
-mysql> flush privileges;
+mysql> create user 'grafanau1'@'localhost' identified by 'psw';
+
+mysql> grant all privileges on grafana.* to 'grafanau1'@'localhost' with grant option;
+mysql>grant all privileges on grafana.* to 'grafanau1'@'remoteip1' with grant option;
+mysql>grant all privileges on grafana.* to 'grafanau1'@'remoteip2' with grant option;
+mysql> flush privileges;        : no need to run for fresh user
 Query OK, 0 rows affected (0.00 sec)
 mysql> use grafana;
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-mysql> create table `session` (
-    -> `key`   char(16) not null,
-    -> `data`  blob,
-    -> `expiry` int(11) unsigned not null,
-    -> primary key (`key`)
-    -> ) ENGINE=MyISAM default charset=utf8;
-Query OK, 0 rows affected (0.01 sec)
-Edit the grafana.ini configuration file (in Ambari, edit the Advanced ams-grafana-ini section in the Ambari Metrics Config tab) - see snippet from the config file below
+exit;
+
+then vim /etc/mysql/mysql.conf.d/mysqld.cnf 
+comment the bind address=
+and restart the mysql server
 
 <snipped>
 #################################### Database ####################################
