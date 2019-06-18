@@ -10,6 +10,9 @@ influxd backup -portable <path-to-backup>
 To backup all databases recently changed at the filesystem level
 influxd backup -portable -start <timestamp> <path-to-backup>
 
+To backup all databases recently changed at the filesystem level
+influxd backup -portable -database telegraf -start 2019-06-18T11:19:00Z /opt/influxd_backup
+
 
 Restore:
 
