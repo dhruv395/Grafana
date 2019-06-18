@@ -1,13 +1,23 @@
 
-sudo service influxdb start (Or leave this step if service is already running)
-influxd backup -database grpcdb /opt/data
-Import Data:
+Backup:
 
-sudo service influxdb stop
-influxd restore -metadir /var/lib/influxdb/meta /opt/data
-influxd restore -database grpcdb -datadir /var/lib/influxdb/data /opt/data
-sudo service influxdb start
+To backup only the telegraf database:
+influxd backup -portable -database telegraf /tmp/backup-influxd     
 
-don't try
-influxd backup -database telegraf ./backup_influxdb
-influxd restore -database telegraf -metadir /var/lib/influxdb/meta -datadir /var/lib/influxdb/data ./backup_influxdb/
+To back up everything:
+influxd backup -portable <path-to-backup>
+
+To backup all databases recently changed at the filesystem level
+influxd backup -portable -start <timestamp> <path-to-backup>
+
+
+Restore:
+
+To restore only the telegraf database (telegraf database must not exist):
+influxd restore -portable -db telegraf path-to-backup
+
+Restore the existing database backup to a temporary database.
+influxd restore -portable -db telegraf -newdb telegraf_bak /opt/influxd-backup/
+
+To restore all databases found within the backup directory:
+influxd restore -portable path-to-backup
