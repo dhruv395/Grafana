@@ -1,0 +1,10 @@
+Resize disk from google console
+        then in the command line
+
+df -hT            -> verify file system type and partition
+lsblk
+growpart /dev/sda 1
+resize2fs /dev/sda1
+df -h 
+done
+
