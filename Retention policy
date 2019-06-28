@@ -1,0 +1,2 @@
+show retention policies on telegraf
+create retention policy rp_1year on telegraf duration 52w replication 1 default
