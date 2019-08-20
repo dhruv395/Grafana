@@ -3,7 +3,7 @@
 #!/bin/bash
 
 # Initialize things
-target_bucket='<bucketname>'
+target_bucket='s3://targetbucket/bucketname'
 timestamp=`date +"%s_%d-%B-%Y_%A@%H%M"`
 backup_tmp="/tmp/"`< /dev/urandom tr -dc "[:alnum:]" | head -c10`
 backup_tar_file="influxdb_backup_$timestamp.tar.gz"
