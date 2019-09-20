@@ -5,7 +5,7 @@ from datetime import datetime
 
 url = "http://prod-2053689399.us-west-2.elb.amazonaws.com/cgi-bin/ciwweb.pl"
 
-client = InfluxDBClient('influxdb-1160877343.us-west-2.elb.amazonaws.com', 8086, 'username', 'password', 'telegraf_metrics')
+client = InfluxDBClient('influxdb-********.us-west-2.elb.amazonaws.com', 8086, 'username', 'password', 'telegraf_metrics')
 json_body = [
 			    {
 			        "measurement": "ping",
